@@ -69,13 +69,13 @@ def install_tasks() -> None:
             "/TR", _cmd("morning"),
             "/SC", "WEEKLY",
             "/D", "MON,TUE,WED,THU,FRI",
-            "/ST", "08:00",
+            "/ST", "08:30",
             "/F", "/IT",
         ],
         capture_output=True, text=True,
     )
     if result.returncode == 0:
-        print(f"✔ {MORNING_TASK}  (Mon–Fri at 08:00)")
+        print(f"✔ {MORNING_TASK}  (Mon–Fri at 08:30)")
     else:
         print(f"✘ {MORNING_TASK}: {result.stderr.strip()}")
 

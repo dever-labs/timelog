@@ -513,7 +513,7 @@ def daemon_status() -> None:
 
     info = task_info.get(MORNING_TASK, {})
     installed_str = "[green]✔[/]" if info.get("installed") else "[red]✘[/]"
-    table.add_row(MORNING_TASK, "Mon–Fri at 08:00", installed_str, info.get("next_run", "N/A"), info.get("last_run", "N/A"))
+    table.add_row(MORNING_TASK, "Mon–Fri at 08:30", installed_str, info.get("next_run", "N/A"), info.get("last_run", "N/A"))
 
     console.print(table)
 
