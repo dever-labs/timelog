@@ -610,15 +610,15 @@ def init() -> None:
     ok = True
 
     try:
-        import win32com.client  # noqa: F401
-        outlook = win32com.client.Dispatch("Outlook.Application")
-        outlook.GetNamespace("MAPI")
-        console.print("  [green]✔[/] Outlook connection OK")
-    except ImportError:
-        console.print("  [red]✘[/] pywin32 not installed")
-        ok = False
+        from .outlook import get_events as _probe_outlook
+        _probe_outlook(datetime.date.today())
+        console.print("  [green]✔[/] Outlook calendar readable")
+    except RuntimeError as exc:
+        first_line = str(exc).splitlines()[0]
+        console.print(f"  [yellow]⚠[/] {first_line}")
+        console.print("  [dim]Make sure Outlook (classic or new) is installed and signed in.[/]")
     except Exception as exc:
-        console.print(f"  [yellow]⚠[/] Outlook not reachable: {exc}")
+        console.print(f"  [yellow]⚠[/] Outlook check failed: {exc}")
 
     try:
         from playwright.sync_api import sync_playwright

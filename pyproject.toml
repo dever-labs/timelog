@@ -23,6 +23,7 @@ dependencies = [
     "openai>=1.0",
     "playwright>=1.44",
     "pywin32>=306",
+    "winsdk>=1.0.0b10",
     "python-dotenv>=1.0",
     "pydantic>=2.0",
     "plyer>=2.1",
