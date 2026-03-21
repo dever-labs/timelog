@@ -118,5 +118,5 @@ Write-Host "  ──────────────────────
 Write-Host "  ✔ timelog is ready! Open a new terminal, then:" -ForegroundColor Green
 Write-Host ""
 Write-Host "    1. timelog init         ← walks you through everything" -ForegroundColor DarkGray
-Write-Host "    2. timelog daemon install" -ForegroundColor DarkGray
+Write-Host "    2. timelog schedule install" -ForegroundColor DarkGray
 Write-Host ""

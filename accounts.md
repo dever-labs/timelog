@@ -15,7 +15,7 @@ Add keywords, aliases, and context to help it make better decisions over time.
 | `python -m timelog catchup` | Catch up on missed days |
 | `python -m timelog vacation 2026-03-25 2026-03-29` | Register vacation |
 | `python -m timelog skip` | Mark today as no-log day |
-| `python -m timelog daemon install` | Set up daily reminders |
+| `python -m timelog schedule install` | Set up daily reminders |
 
 ---
 

@@ -19,9 +19,9 @@ app = typer.Typer(
     add_completion=False,
     no_args_is_help=True,
 )
-daemon_app = typer.Typer(help="Manage background reminder tasks.", no_args_is_help=True)
+schedule_app = typer.Typer(help="Manage scheduled reminder tasks.", no_args_is_help=True)
 auth_app = typer.Typer(help="Authenticate with GitHub (Copilot Models API).", no_args_is_help=True)
-app.add_typer(daemon_app, name="daemon")
+app.add_typer(schedule_app, name="schedule")
 app.add_typer(auth_app, name="auth")
 
 console = Console()
@@ -467,7 +467,7 @@ def trigger(
 # daemon subcommands
 # ---------------------------------------------------------------------------
 
-@daemon_app.command("install")
+@schedule_app.command("install")
 def daemon_install() -> None:
     """Install scheduled reminder tasks (per-day EOD + login morning prompt)."""
     from .scheduler import install_tasks
@@ -478,7 +478,7 @@ def daemon_install() -> None:
     console.print("[dim]Morning: fires on Windows login (weekdays)[/]")
 
 
-@daemon_app.command("uninstall")
+@schedule_app.command("uninstall")
 def daemon_uninstall() -> None:
     """Remove scheduled reminder tasks."""
     from .scheduler import uninstall_tasks
@@ -486,7 +486,7 @@ def daemon_uninstall() -> None:
     uninstall_tasks()
 
 
-@daemon_app.command("status")
+@schedule_app.command("status")
 def daemon_status() -> None:
     """Show status of all scheduled reminder tasks."""
     from .scheduler import MORNING_TASK, get_task_status
@@ -655,7 +655,7 @@ def init() -> None:
         if do_daemon:
             install_tasks()
         else:
-            console.print("  [dim]Skipped — run `timelog daemon install` whenever you're ready.[/]")
+            console.print("  [dim]Skipped — run `timelog schedule install` whenever you're ready.[/]")
 
     # ── Done ──────────────────────────────────────────────────────────────────
     console.print()

@@ -57,7 +57,7 @@ What the installer does:
 
 3. **Install daily reminders:**
    ```powershell
-   timelog daemon install
+   timelog schedule install
    ```
 
 ---
@@ -90,9 +90,9 @@ timelog fits into your day without extra effort:
 | `timelog auth logout` | Remove stored GitHub token |
 | `timelog auth status` | Check authentication status |
 | `timelog init` | First-time setup and health check |
-| `timelog daemon install` | Set up Windows Task Scheduler reminders |
-| `timelog daemon uninstall` | Remove scheduled tasks |
-| `timelog daemon status` | Show all scheduled tasks and their state |
+| `timelog schedule install` | Set up Windows Task Scheduler reminders |
+| `timelog schedule uninstall` | Remove scheduled tasks |
+| `timelog schedule status` | Show all scheduled tasks and their state |
 
 ---
 

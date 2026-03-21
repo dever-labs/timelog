@@ -18,6 +18,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `timelog vacation` — register vacation ahead of time
 - `timelog skip` — mark intentional no-log days
 - `timelog auth login/logout/status` — GitHub auth management
-- `timelog daemon install/uninstall/status` — scheduler management
+- `timelog schedule install/uninstall/status` — scheduler management
 - `timelog init` — first-time setup and health check
 - Global install via pipx + `install.ps1` one-liner
