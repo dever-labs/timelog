@@ -2,7 +2,7 @@
 
 import datetime
 
-from .db import init_db, get_day_status, get_missing_days
+from .db import get_day_status, get_missing_days, init_db
 from .notify import eod_prompt, morning_prompt
 
 

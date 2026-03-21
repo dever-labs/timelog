@@ -1,6 +1,7 @@
 """Read Outlook calendar events via win32com (Windows only)."""
 
 import datetime
+
 from .models import CalendarEvent
 
 

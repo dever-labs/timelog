@@ -1,8 +1,9 @@
 """Configuration — all user data lives in ~/.timelog/ (AppData-style, no repo dependency)."""
 
-from pathlib import Path
-from dotenv import load_dotenv
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 # ── User data directory ───────────────────────────────────────────────────────
 CONFIG_DIR = Path.home() / ".timelog"

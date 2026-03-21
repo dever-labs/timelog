@@ -1,7 +1,8 @@
 """Pydantic models for calendar events and SAP time entries."""
 
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
 
 
 class CalendarEvent(BaseModel):

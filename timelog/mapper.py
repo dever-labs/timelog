@@ -1,9 +1,10 @@
 """Map CalendarEvents → TimeEntries using GitHub Copilot (Models API), and learn new mappings."""
 
 import json
+
 from openai import OpenAI
 
-from .config import ACCOUNTS_MD, get_github_token, COPILOT_MODEL, COPILOT_BASE_URL
+from .config import ACCOUNTS_MD, COPILOT_BASE_URL, COPILOT_MODEL, get_github_token
 from .models import CalendarEvent, TimeEntry
 
 _SYSTEM_PROMPT = """\

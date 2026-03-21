@@ -4,12 +4,12 @@
 #       placeholder selectors below to match the actual field IDs / labels.
 #       Run `timelog init` first to verify your SAP_URL is reachable.
 
-import asyncio
 from pathlib import Path
 
-from playwright.async_api import async_playwright, Page, TimeoutError as PWTimeout
+from playwright.async_api import Page, async_playwright
+from playwright.async_api import TimeoutError as PWTimeout
 
-from .config import SAP_URL, SAP_USERNAME, SAP_PASSWORD
+from .config import SAP_PASSWORD, SAP_URL, SAP_USERNAME
 from .models import TimeEntry
 
 _SCREENSHOT_DIR = Path("sap_screenshots")

@@ -6,10 +6,10 @@ import re
 from typing import Optional
 
 import typer
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-from rich import box
 
 from . import config
 from .models import TimeEntry
@@ -99,10 +99,10 @@ def _parse_accounts_from_md() -> list[dict]:
 
 def _run_log_for_date(target_date: datetime.date) -> bool:
     """Run the full Outlook→AI→SAP log flow for *target_date*. Returns True if submitted."""
-    from .outlook import get_events
+    from .db import mark_submitted, save_entries
     from .mapper import map_events, update_accounts_md
+    from .outlook import get_events
     from .sap import submit_entries
-    from .db import save_entries, mark_submitted
 
     console.print(Panel(f"📅  Fetching Outlook events for [bold]{target_date}[/]", expand=False))
 
@@ -221,7 +221,7 @@ def status(
     weeks: int = typer.Option(2, "--weeks", "-w", help="Number of weeks to show."),
 ) -> None:
     """Show time logging status for recent weeks."""
-    from .db import init_db, get_week_summary, get_missing_days
+    from .db import get_missing_days, get_week_summary, init_db
 
     init_db()
     today = datetime.date.today()
@@ -316,7 +316,7 @@ def catchup(
     ),
 ) -> None:
     """Catch up on missed days interactively."""
-    from .db import init_db, get_missing_days, set_day_status
+    from .db import get_missing_days, init_db, set_day_status
 
     init_db()
     today = datetime.date.today()
@@ -485,7 +485,7 @@ def daemon_uninstall() -> None:
 @daemon_app.command("status")
 def daemon_status() -> None:
     """Show status of all scheduled reminder tasks."""
-    from .scheduler import get_task_status, EOD_TASKS, MORNING_TASK
+    from .scheduler import MORNING_TASK, get_task_status
 
     task_info = get_task_status()
     table = Table(title="Scheduled Tasks", box=box.ROUNDED, show_lines=True)
@@ -538,7 +538,9 @@ def accounts() -> None:
 @app.command()
 def init() -> None:
     """First-time setup: configure timelog interactively, then validate everything."""
-    import subprocess, sys
+    import subprocess
+    import sys
+
     from .auth import is_authenticated
 
     console.print(Panel(
@@ -666,7 +668,7 @@ def init() -> None:
 @auth_app.command("login")
 def auth_login() -> None:
     """Authenticate with GitHub via browser — stores token in Windows Credential Manager."""
-    from .auth import login, is_authenticated
+    from .auth import is_authenticated, login
 
     if is_authenticated():
         console.print("[green]✔[/] Already authenticated. Use `timelog auth logout` to switch accounts.")
