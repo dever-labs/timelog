@@ -19,9 +19,6 @@ load_dotenv(CONFIG_FILE)
 load_dotenv()  # dev fallback — .env in cwd
 
 # ── Settings ──────────────────────────────────────────────────────────────────
-# GitHub OAuth App client ID — set interactively via `timelog init`
-GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID", "")
-
 COPILOT_MODEL = os.getenv("COPILOT_MODEL", "gpt-4o")
 COPILOT_BASE_URL = "https://models.inference.ai.azure.com"
 
@@ -33,6 +30,7 @@ SAP_PASSWORD = os.getenv("SAP_PASSWORD", "")
 def get_github_token() -> str:
     """Return GitHub token from keyring (OAuth flow) or env fallback."""
     from .auth import get_token as _keyring_token
+
     return _keyring_token() or os.getenv("GITHUB_TOKEN", "")
 
 
@@ -46,7 +44,7 @@ def save_config(values: dict[str, str]) -> None:
                 k, _, v = line.partition("=")
                 existing[k.strip()] = v.strip()
 
-    existing.update({k: v for k, v in values.items() if v})  # only write non-empty values
+    existing.update({k: v for k, v in values.items() if v})
 
     lines = [f"{k}={v}" for k, v in existing.items()]
     CONFIG_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")

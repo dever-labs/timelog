@@ -553,25 +553,9 @@ def init() -> None:
     ))
 
     # ── Step 1: Collect config values ────────────────────────────────────────
-    console.print("\n[bold]Step 1 of 4 · Configuration[/]")
+    console.print("\n[bold]Step 1 of 3 · Configuration[/]")
 
     new_values: dict[str, str] = {}
-
-    client_id = config.GITHUB_CLIENT_ID
-    if not client_id:
-        console.print(
-            "\n  To get a GitHub OAuth Client ID:\n"
-            "  1. Go to [link]https://github.com/settings/developers[/link]\n"
-            "  2. Click [bold]New OAuth App[/bold]\n"
-            "  3. Name: timelog  |  Homepage: anything  |  Callback URL: leave blank\n"
-            "  4. Paste the Client ID below\n"
-        )
-    client_id = typer.prompt(
-        "  GitHub OAuth Client ID",
-        default=client_id or "",
-        show_default=bool(client_id),
-    )
-    new_values["GITHUB_CLIENT_ID"] = client_id
 
     sap_url = typer.prompt("  SAP Fiori URL", default=config.SAP_URL or "")
     new_values["SAP_URL"] = sap_url
@@ -586,12 +570,13 @@ def init() -> None:
     console.print(f"  [green]✔[/] Config saved to [cyan]{config.CONFIG_FILE}[/]")
 
     # ── Step 2: Seed accounts.md ─────────────────────────────────────────────
-    console.print("\n[bold]Step 2 of 4 · accounts.md[/]")
+    console.print("\n[bold]Step 2 of 3 · accounts.md[/]")
     if config.ACCOUNTS_MD.exists():
         console.print(f"  [green]✔[/] accounts.md already exists at [cyan]{config.ACCOUNTS_MD}[/]")
     else:
         if config._TEMPLATE_ACCOUNTS_MD.exists():
             import shutil
+
             shutil.copy(config._TEMPLATE_ACCOUNTS_MD, config.ACCOUNTS_MD)
             console.print(f"  [green]✔[/] accounts.md created at [cyan]{config.ACCOUNTS_MD}[/]")
             console.print("  [dim]Edit it to add your real SAP accounts and keywords.[/]")
@@ -599,19 +584,21 @@ def init() -> None:
             console.print(f"  [yellow]⚠[/] Template not found — create [cyan]{config.ACCOUNTS_MD}[/] manually.")
 
     # ── Step 3: GitHub auth ───────────────────────────────────────────────────
-    console.print("\n[bold]Step 3 of 4 · GitHub authentication[/]")
+    console.print("\n[bold]Step 3 of 3 · GitHub authentication[/]")
     if is_authenticated():
         console.print("  [green]✔[/] Already authenticated — token in Windows Credential Manager")
     else:
         do_login = typer.confirm("  Authenticate with GitHub now?", default=True)
         if do_login:
+            from .auth import CLIENT_ID
             from .auth import login as _gh_login
+
             try:
                 console.print(Panel(
                     "Opening [bold]github.com[/bold] in your browser.\nEnter the code shown below to authorize timelog.",
                     border_style="cyan",
                 ))
-                _gh_login(client_id, open_browser=True)
+                _gh_login(CLIENT_ID, open_browser=True)
                 console.print("  [green]✔[/] Authenticated — token saved to Windows Credential Manager")
             except RuntimeError as exc:
                 console.print(f"  [red]✘[/] {exc}")
@@ -672,22 +659,11 @@ def init() -> None:
 @auth_app.command("login")
 def auth_login() -> None:
     """Authenticate with GitHub via browser — stores token in Windows Credential Manager."""
-    from .auth import is_authenticated, login
+    from .auth import CLIENT_ID, is_authenticated, login
 
     if is_authenticated():
         console.print("[green]✔[/] Already authenticated. Use `timelog auth logout` to switch accounts.")
         return
-
-    if not config.GITHUB_CLIENT_ID:
-        console.print(Panel(
-            "[red]GITHUB_CLIENT_ID is not set.[/]\n\n"
-            "1. Go to [link]https://github.com/settings/developers[/link]\n"
-            "2. Click [bold]New OAuth App[/bold]\n"
-            "3. Set any name/homepage, leave callback URL blank\n"
-            "4. Copy the [bold]Client ID[/bold] and run [bold]timelog init[/bold] to save it",
-            title="Setup required", border_style="yellow",
-        ))
-        raise typer.Exit(1)
 
     console.print(Panel(
         "Opening [bold]github.com[/bold] in your browser.\n"
@@ -696,8 +672,7 @@ def auth_login() -> None:
     ))
 
     try:
-        token = login(config.GITHUB_CLIENT_ID, open_browser=True)
-        _ = token  # stored in keyring by login()
+        login(CLIENT_ID, open_browser=True)
         console.print("\n[bold green]✔ Authenticated successfully![/] Token saved to Windows Credential Manager.")
     except RuntimeError as exc:
         console.print(f"[red]✘ {exc}[/]")

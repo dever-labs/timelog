@@ -16,6 +16,7 @@ _ACCOUNT = "oauth-token"
 _DEVICE_CODE_URL = "https://github.com/login/device/code"
 _ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token"
 _SCOPE = "models:read"
+CLIENT_ID = "Ov23lirZz2NYsizr5RFE"  # timelog GitHub OAuth App — public, not a secret
 
 
 # ---------------------------------------------------------------------------
