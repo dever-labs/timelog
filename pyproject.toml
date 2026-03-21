@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "timelog"
+version = "0.1.0"
+description = "Outlook → SAP time logging assistant"
+requires-python = ">=3.11"
+authors = [{name = "czprz"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["sap", "timelog", "outlook", "automation", "playwright"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+    "Environment :: Console",
+]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13",
+    "openai>=1.0",
+    "playwright>=1.44",
+    "pywin32>=306",
+    "python-dotenv>=1.0",
+    "pydantic>=2.0",
+    "plyer>=2.1",
+    "windows-toasts>=1.0",
+    "keyring>=25.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/czprz/timelog"
+Repository = "https://github.com/czprz/timelog"
+Changelog = "https://github.com/czprz/timelog/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/czprz/timelog/issues"
+
+[project.scripts]
+timelog = "timelog.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["timelog"]
+include = ["timelog/accounts_template.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
