@@ -553,7 +553,7 @@ def init() -> None:
     ))
 
     # ── Step 1: Collect config values ────────────────────────────────────────
-    console.print("\n[bold]Step 1 of 3 · Configuration[/]")
+    console.print("\n[bold]Step 1 of 4 · Configuration[/]")
 
     new_values: dict[str, str] = {}
 
@@ -570,7 +570,7 @@ def init() -> None:
     console.print(f"  [green]✔[/] Config saved to [cyan]{config.CONFIG_FILE}[/]")
 
     # ── Step 2: Seed accounts.md ─────────────────────────────────────────────
-    console.print("\n[bold]Step 2 of 3 · accounts.md[/]")
+    console.print("\n[bold]Step 2 of 4 · accounts.md[/]")
     if config.ACCOUNTS_MD.exists():
         console.print(f"  [green]✔[/] accounts.md already exists at [cyan]{config.ACCOUNTS_MD}[/]")
     else:
@@ -584,7 +584,7 @@ def init() -> None:
             console.print(f"  [yellow]⚠[/] Template not found — create [cyan]{config.ACCOUNTS_MD}[/] manually.")
 
     # ── Step 3: GitHub auth ───────────────────────────────────────────────────
-    console.print("\n[bold]Step 3 of 3 · GitHub authentication[/]")
+    console.print("\n[bold]Step 3 of 4 · GitHub authentication[/]")
     if is_authenticated():
         console.print("  [green]✔[/] Already authenticated — token in Windows Credential Manager")
     else:
