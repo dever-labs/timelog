@@ -59,21 +59,23 @@ def install_tasks() -> None:
             print(f"✘ {task_name}: {result.stderr.strip()}")
             print("  Tip: Run in an interactive terminal, not a service.")
 
-    # --- Morning task: fires on Windows login (ONLOGON), Mon–Fri only ---
-    # schtasks ONLOGON doesn't support /D day filter directly, so we use a
-    # lightweight check inside run_morning_trigger() to skip weekends.
+    # --- Morning task: daily at 08:00, Mon–Fri ---
+    # ONLOGON requires elevated permissions on some systems; a fixed early time is equivalent.
+    # Weekend check is handled inside run_morning_trigger() so it's silent on Sat/Sun.
     result = subprocess.run(
         [
             "schtasks", "/Create",
             "/TN", MORNING_TASK,
             "/TR", _cmd("morning"),
-            "/SC", "ONLOGON",
+            "/SC", "WEEKLY",
+            "/D", "MON,TUE,WED,THU,FRI",
+            "/ST", "08:00",
             "/F", "/IT",
         ],
         capture_output=True, text=True,
     )
     if result.returncode == 0:
-        print(f"✔ {MORNING_TASK}  (on login, weekdays)")
+        print(f"✔ {MORNING_TASK}  (Mon–Fri at 08:00)")
     else:
         print(f"✘ {MORNING_TASK}: {result.stderr.strip()}")
 

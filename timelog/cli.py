@@ -513,7 +513,7 @@ def daemon_status() -> None:
 
     info = task_info.get(MORNING_TASK, {})
     installed_str = "[green]✔[/]" if info.get("installed") else "[red]✘[/]"
-    table.add_row(MORNING_TASK, "On login (weekdays)", installed_str, info.get("next_run", "N/A"), info.get("last_run", "N/A"))
+    table.add_row(MORNING_TASK, "Mon–Fri at 08:00", installed_str, info.get("next_run", "N/A"), info.get("last_run", "N/A"))
 
     console.print(table)
 
@@ -648,7 +648,14 @@ def init() -> None:
     if already_installed:
         console.print("  [green]✔[/] Scheduled tasks already installed")
     else:
-        install_tasks()
+        do_daemon = typer.confirm(
+            "  Install daily reminders? (EOD prompts + morning catch-up)",
+            default=True,
+        )
+        if do_daemon:
+            install_tasks()
+        else:
+            console.print("  [dim]Skipped — run `timelog daemon install` whenever you're ready.[/]")
 
     # ── Done ──────────────────────────────────────────────────────────────────
     console.print()
