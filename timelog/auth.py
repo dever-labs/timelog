@@ -15,7 +15,7 @@ _SERVICE = "timelog-github"
 _ACCOUNT = "oauth-token"
 _DEVICE_CODE_URL = "https://github.com/login/device/code"
 _ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token"
-_SCOPE = "models:read"
+_SCOPE = "read:user"  # minimal scope — Models API only requires a valid GitHub token
 CLIENT_ID = "Ov23lirZz2NYsizr5RFE"  # timelog GitHub OAuth App — public, not a secret
 
 
@@ -65,6 +65,12 @@ def login(client_id: str, open_browser: bool = True) -> str:
         headers={"Accept": "application/json"},
         timeout=10,
     )
+    if resp.status_code == 400:
+        raise RuntimeError(
+            "GitHub rejected the auth request (400).\n"
+            "  → Enable Device Flow on your OAuth App:\n"
+            "    github.com/settings/developers → timelog app → tick 'Enable Device Flow'"
+        )
     resp.raise_for_status()
     data = resp.json()
 
