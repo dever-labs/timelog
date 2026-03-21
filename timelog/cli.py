@@ -14,9 +14,13 @@ from rich.table import Table
 from . import config
 from .models import TimeEntry
 
-app = typer.Typer(help="Outlook → SAP time logging assistant", add_completion=False)
-daemon_app = typer.Typer(help="Manage background reminder tasks.")
-auth_app = typer.Typer(help="Authenticate with GitHub (Copilot Models API).")
+app = typer.Typer(
+    help="Outlook → SAP time logging assistant",
+    add_completion=False,
+    no_args_is_help=True,
+)
+daemon_app = typer.Typer(help="Manage background reminder tasks.", no_args_is_help=True)
+auth_app = typer.Typer(help="Authenticate with GitHub (Copilot Models API).", no_args_is_help=True)
 app.add_typer(daemon_app, name="daemon")
 app.add_typer(auth_app, name="auth")
 
@@ -30,7 +34,7 @@ def _version_callback(value: bool) -> None:
         raise typer.Exit()
 
 
-@app.callback()
+@app.callback(invoke_without_command=True)
 def main(
     version: bool = typer.Option(
         None, "--version", "-v", callback=_version_callback, is_eager=True, help="Show version and exit."
