@@ -606,7 +606,7 @@ def init() -> None:
             console.print("  [dim]Skipped — run `timelog auth login` when ready.[/]")
 
     # ── Step 4: Health checks ─────────────────────────────────────────────────
-    console.print("\n[bold]Step 4 of 4 · Health checks[/]")
+    console.print("\n[bold]Step 4 of 5 · Health checks[/]")
     ok = True
 
     try:
@@ -638,13 +638,24 @@ def init() -> None:
             console.print(f"  [red]✘[/] Playwright install failed: {result.stderr.strip()}")
             ok = False
 
+    # ── Step 5: Daemon (daily reminders) ─────────────────────────────────────
+    console.print("\n[bold]Step 5 of 5 · Daily reminders[/]")
+    from .scheduler import get_task_status, install_tasks
+
+    task_info = get_task_status()
+    already_installed = any(v.get("installed") for v in task_info.values())
+
+    if already_installed:
+        console.print("  [green]✔[/] Scheduled tasks already installed")
+    else:
+        install_tasks()
+
     # ── Done ──────────────────────────────────────────────────────────────────
     console.print()
     if ok:
         console.print(Panel(
             "[bold green]You're all set! 🎉[/]\n\n"
             f"  Edit your accounts:  [cyan]{config.ACCOUNTS_MD}[/]\n"
-            "  Set up reminders:    [cyan]timelog daemon install[/]\n"
             "  Log today:           [cyan]timelog log[/]",
             border_style="green",
         ))
