@@ -36,10 +36,10 @@ dependencies = [
 dev = ["ruff>=0.4"]
 
 [project.urls]
-Homepage = "https://github.com/czprz/timelog"
-Repository = "https://github.com/czprz/timelog"
-Changelog = "https://github.com/czprz/timelog/blob/main/CHANGELOG.md"
-"Bug Tracker" = "https://github.com/czprz/timelog/issues"
+Homepage = "https://github.com/dever-labs/timelog"
+Repository = "https://github.com/dever-labs/timelog"
+Changelog = "https://github.com/dever-labs/timelog/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/dever-labs/timelog/issues"
 
 [project.scripts]
 timelog = "timelog.cli:app"

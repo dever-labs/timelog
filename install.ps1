@@ -12,7 +12,7 @@
 $ErrorActionPreference = "Stop"
 
 # ── Configure these for your org ─────────────────────────────────────────────
-$GH_REPO = "czprz/timelog"
+$GH_REPO = "dever-labs/timelog"
 # ─────────────────────────────────────────────────────────────────────────────
 
 function Write-Step($msg) { Write-Host "`n  → $msg" -ForegroundColor Cyan }

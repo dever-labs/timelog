@@ -4,8 +4,8 @@
 
 ![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue)
 ![Platform Windows](https://img.shields.io/badge/platform-windows-lightgrey)
-![License](https://img.shields.io/github/license/czprz/timelog)
-![Latest release](https://img.shields.io/github/v/release/czprz/timelog)
+![License](https://img.shields.io/github/license/dever-labs/timelog)
+![Latest release](https://img.shields.io/github/v/release/dever-labs/timelog)
 
 ---
 
@@ -32,7 +32,7 @@
 ## Installation
 
 ```powershell
-irm https://raw.githubusercontent.com/czprz/timelog/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/dever-labs/timelog/main/install.ps1 | iex
 ```
 
 What the installer does:
@@ -140,13 +140,13 @@ This is a one-time step per SAP environment.
 
 ```powershell
 # Reinstall the latest release
-irm https://raw.githubusercontent.com/czprz/timelog/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/dever-labs/timelog/main/install.ps1 | iex
 ```
 
 Or pin a specific version:
 
 ```powershell
-pipx install git+https://github.com/czprz/timelog.git@v1.2.0 --force
+pipx install git+https://github.com/dever-labs/timelog.git@v1.2.0 --force
 ```
 
 ---
