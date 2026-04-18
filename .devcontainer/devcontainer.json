@@ -1,0 +1,28 @@
+{
+  "name": "timelog",
+  // Central devcontainer image maintained by the platform team in:
+  //   github.com/dever-labs/devcontainers
+  // Includes: Python 3.13, Node.js LTS, Docker-in-Docker, kubectl, Helm, git, GitHub CLI.
+  "image": "ghcr.io/dever-labs/devcontainers/python-dev:latest",
+
+  "mounts": [
+    "source=dever-labs-gh-config,target=/home/vscode/.config/gh,type=volume"
+  ],
+
+  "remoteEnv": {
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "github.copilot-chat",
+        "anthropics.claude-code",
+        "ms-python.python",
+        "ms-python.pylance",
+        "ms-python.black-formatter"
+      ]
+    }
+  }
+}
