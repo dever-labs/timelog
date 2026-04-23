@@ -6,7 +6,8 @@
   "image": "ghcr.io/dever-labs/devcontainers/python-dev:latest",
 
   "mounts": [
-    "source=dever-labs-gh-config,target=/home/vscode/.config/gh,type=volume"
+    "source=dever-labs-gh-config,target=/home/vscode/.config/gh,type=volume",
+    "source=dever-labs-copilot-config,target=/home/vscode/.copilot,type=volume"
   ],
 
   "remoteEnv": {
